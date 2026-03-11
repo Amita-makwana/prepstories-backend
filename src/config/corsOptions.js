@@ -7,10 +7,11 @@ const corsOptions = {
       "http://127.0.0.1:5173",
       "http://127.0.0.1:5174"
     ].filter(Boolean);
+
     if (!origin || allowed.includes(origin)) {
       callback(null, true);
     } else {
-      callback(null, allowed[0] || true);
+      callback(new Error("Not allowed by CORS"));
     }
   },
   credentials: true
