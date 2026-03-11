@@ -10,13 +10,21 @@ export const googleCallback = [
   (req, res) => {
     const token = generateToken(req.user._id);
 
+
     res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      path: "/"
-    });
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+       path: "/"
+});
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production",
+    //   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    //   maxAge: 7 * 24 * 60 * 60 * 1000,
+    //   path: "/"
+    // });
 
     const base = process.env.CLIENT_URL || "http://localhost:5173";
     const sep = base.includes("?") ? "&" : "?";
@@ -25,7 +33,12 @@ export const googleCallback = [
 ];
 
 export const logout = (req, res) => {
-  res.clearCookie("token");
+  // res.clearCookie("token");
+  res.clearCookie("token", {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none"
+});
   res.json({ success: true, message: "Logged out successfully" });
 };
 
